@@ -30,6 +30,7 @@ src/config/
 ├── profileConfig.ts          # 用户资料配置
 ├── sidebarConfig.ts          # 侧边栏布局配置
 ├── sponsorConfig.ts          # 打赏配置
+├── booknavConfig.ts          # 书签配置
 └── README.md                 # 本文件
 ```
 

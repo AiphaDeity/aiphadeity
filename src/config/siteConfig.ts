@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "春夏秋冬 日月轮转",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://aiphadeity.cn",
 
 	// 站点描述
 	description:
