@@ -48,20 +48,13 @@ export const siteConfig: SiteConfig = {
 	subtitle: "春夏秋冬 日月轮转",
 
 	// 站点 URL
-	site_url: "https://aiphadeity.cn",
+	site_url: "https://blog.aiphadeity.cn",
 
 	// 站点描述
-	description:
-		"AiphaDeity 的个人技术博客 记录嵌入式开发、Web 全栈与生活随笔。",
+	description: "AiphaDeity 的个人技术博客 记录嵌入式开发、Web 全栈与生活随笔。",
 
 	// 站点关键词
-	keywords: [
-		"AiphaDeity",
-		"个人技术博客",
-		"嵌入式开发",
-		"Astro",
-
-	],
+	keywords: ["AiphaDeity", "个人技术博客", "嵌入式开发", "Astro"],
 
 	// 主题色
 	themeColor: {
