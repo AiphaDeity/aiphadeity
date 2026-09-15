@@ -89,6 +89,12 @@ export const booknavConfig: BooknavGroup[] = [
 				desc: "Windows 上的 Unix 风格开发环境与包管理",
 				weight: 3,
 			},
+			{
+				title: "腾讯云",
+				url: "https://cloud.tencent.com",
+				desc: "腾讯云服务器、数据库与 CDN 等云服务",
+				weight: 2,
+			},
 		],
 	},
 	{

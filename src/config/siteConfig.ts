@@ -13,7 +13,7 @@ const pages = resolvePageToggles({
 	// 友链页面开关
 	friends: true,
 	// 留言板页面开关，需要配置评论系统
-	guestbook: true,
+	guestbook: false,
 
 	// ── 我的 (My) ──────────────────────────────────
 
@@ -80,14 +80,11 @@ export const siteConfig: SiteConfig = {
 	// Favicon 配置
 	// 如果启用了OpenGraph图片功能，数组中需要包含png格式的favicon图标
 	favicon: [
-		{
-			// 图标文件路径
-			src: "/favicon/firefly-32.png",
-			// 可选，指定主题 'light' | 'dark'
-			// theme: "light",
-			// 可选，图标大小
-			// sizes: "32x32",
-		},
+		// 第一项同时用作 apple-touch-icon 和 OG 分享图作者标识
+		{ src: "/favicon/avatar-180.png", sizes: "180x180" },
+		{ src: "/favicon/avatar-192.png", sizes: "192x192" },
+		{ src: "/favicon/avatar-128.png", sizes: "128x128" },
+		{ src: "/favicon/avatar-32.png", sizes: "32x32" },
 	],
 
 	// 导航栏配置
@@ -103,9 +100,8 @@ export const siteConfig: SiteConfig = {
 		// 使用 Astro 图标库时不需要设置 valueDark，图标会自动跟随主题亮暗色切换
 		logo: {
 			type: "image",
-			value: "assets/images/logo/firefly-light.png",
-			valueDark: "assets/images/logo/firefly-dark.png",
-			alt: "🍀",
+			value: "assets/images/logo/a.png",
+			alt: "A",
 		},
 		// 导航栏标题
 		title: "AiphaDeity",
@@ -253,7 +249,7 @@ export const siteConfig: SiteConfig = {
 	// ── Bilibili配置 ──────────────────────────────────
 	bilibili: {
 		// 你的 Bilibili 用户 UID
-		uid: "38932988",
+		uid: "393283378",
 	},
 
 	// ── 番组计划bangumi配置 ──────────────────────────────────

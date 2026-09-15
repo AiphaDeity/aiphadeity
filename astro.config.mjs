@@ -389,4 +389,5 @@ export default defineConfig({
 			assetsInlineLimit: 4096,
 		},
 	},
+	devToolbar: { enabled: false },
 });

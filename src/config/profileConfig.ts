@@ -34,6 +34,12 @@ export const profileConfig: ProfileConfig = {
 			showName: false,
 		},
 		{
+			name: "Gitee",
+			icon: "fa7-brands:gitee",
+			url: "https://gitee.com/aiphadeity",
+			showName: false,
+		},
+		{
 			name: "Email",
 			icon: "fa7-solid:envelope",
 			url: "mailto:mr.zhang2002@qq.com",
@@ -43,12 +49,6 @@ export const profileConfig: ProfileConfig = {
 			name: "RSS",
 			icon: "fa7-solid:rss",
 			url: "/rss/",
-			showName: false,
-		},
-		{
-			name: "Atom",
-			icon: "fa7-solid:atom",
-			url: "/atom/",
 			showName: false,
 		},
 	],
