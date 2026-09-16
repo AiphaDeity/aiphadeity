@@ -190,6 +190,12 @@ export const booknavConfig: BooknavGroup[] = [
 				desc: "常用在线工具合集",
 				weight: 5,
 			},
+			{
+				title: "ITDOG",
+				url: "https://www.itdog.cn",
+				desc: "网站测速、ping 与路由追踪等网络检测工具",
+				weight: 4,
+			},
 		],
 	},
 	{
