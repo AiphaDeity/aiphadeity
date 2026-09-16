@@ -45,10 +45,10 @@ export const siteConfig: SiteConfig = {
 	title: "AiphaDeity",
 
 	// 站点副标题
-	subtitle: "春夏秋冬 日月轮转",
+	subtitle: "云升",
 
 	// 站点 URL
-	site_url: "https://blog.aiphadeity.cn",
+	site_url: "https://aiphadeity.cn",
 
 	// 站点描述
 	description: "AiphaDeity 的个人技术博客 记录嵌入式开发、Web 全栈与生活随笔。",
