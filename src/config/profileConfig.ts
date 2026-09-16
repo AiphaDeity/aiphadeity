@@ -12,7 +12,7 @@ export const profileConfig: ProfileConfig = {
 	name: "AiphaDeity",
 
 	// 个人签名
-	bio: "千万金光破云而出、于尘世中贯穿天地",
+	bio: "路漫漫其修远兮，吾将上下而求索",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons

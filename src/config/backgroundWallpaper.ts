@@ -73,17 +73,17 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否启用主页横幅文字
 			enable: true,
 			// 主页横幅主标题
-			title: "Lovely firefly!",
+			title: "AiphaDeity Blog",
 			// 主页横幅主标题字体大小
 			titleSize: "4.5rem",
 			// 主页横幅副标题
 			subtitle: [
-				"In Reddened Chrysalis, I Once Rest",
-				"From Shattered Sky, I Free Fall",
-				"Amidst Silenced Stars, I Deep Sleep",
-				"Upon Lighted Fyrefly, I Soon Gaze",
-				"From Undreamt Night, I Thence Shine",
-				"In Finalized Morrow, I Full Bloom",
+				"千万金光破云而出，于尘世中贯穿天地",
+				"此心如灿阳，至死方熄",
+				"蝉不知雪",
+				"空待三春、徒梦百年",
+				"井底之蛙，不知大海之宽阔，却知晓天空之蓝",
+				"这个世上没有什么偶然，有的只是必然",
 			],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
