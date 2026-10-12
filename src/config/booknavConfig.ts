@@ -145,6 +145,26 @@ export const booknavConfig: BooknavGroup[] = [
 				icon: "simple-icons:stmicroelectronics",
 				weight: 8,
 			},
+			{
+				title: "FreeRTOS",
+				url: "https://www.freertos.org",
+				desc: "开源嵌入式实时操作系统 RTOS",
+				weight: 7,
+			},
+			{
+				title: "LVGL",
+				url: "https://lvgl.io",
+				desc: "轻量级嵌入式图形库",
+				icon: "simple-icons:lvgl",
+				weight: 6,
+			},
+			{
+				title: "Code::Blocks",
+				url: "https://www.codeblocks.org",
+				desc: "开源跨平台 C / C++ IDE",
+				icon: "simple-icons:codeblocks",
+				weight: 5,
+			},
 		],
 	},
 	{
