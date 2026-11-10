@@ -1,6 +1,6 @@
 ---
 title: "嵌入式通识：嵌入式到底是什么？"
-published: 2026-11-09
+published: 2026-10-26
 description: "从设备的输入、处理和输出出发，认识嵌入式系统的组成，以及 MCU、MPU、FPGA 和开发方式之间的关系。"
 tags: [嵌入式]
 category: 嵌入式基础
