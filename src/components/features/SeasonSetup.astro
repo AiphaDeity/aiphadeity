@@ -1,0 +1,8 @@
+---
+import { seasonConfig } from "@/config";
+import { bootstrapSeason } from "@/utils/season-bootstrap";
+
+// 只序列化可信的本地配置，并转义 script 结束标签。
+const script = `(${bootstrapSeason.toString()})(${JSON.stringify(seasonConfig).replace(/</g, "\\u003c")});`;
+---
+{seasonConfig.enabled && <script is:inline set:html={script} />}

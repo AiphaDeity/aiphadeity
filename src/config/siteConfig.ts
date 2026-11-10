@@ -51,7 +51,7 @@ export const siteConfig: SiteConfig = {
 	site_url: "https://aiphadeity.cn",
 
 	// 站点描述
-	description: "AiphaDeity 的个人技术博客 记录嵌入式开发、Web 全栈与生活随笔。",
+	description: "AiphaDeity 的个人技术博客，记录嵌入式开发与技术学习。",
 
 	// 站点关键词
 	keywords: ["AiphaDeity", "个人技术博客", "嵌入式开发", "Astro"],
@@ -100,8 +100,9 @@ export const siteConfig: SiteConfig = {
 		// 使用 Astro 图标库时不需要设置 valueDark，图标会自动跟随主题亮暗色切换
 		logo: {
 			type: "image",
-			value: "assets/images/logo/a.png",
-			alt: "A",
+			value: "/assets/images/logo/yunsheng-cloud.svg",
+			valueDark: "/assets/images/logo/yunsheng-cloud-dark.svg",
+			alt: "云升 · 云山与初日",
 		},
 		// 导航栏标题
 		title: "云升",

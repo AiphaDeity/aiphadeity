@@ -1,0 +1,35 @@
+/* 侧栏 DOM 继续由 Firefly 管理，保留 Swup 从内页返回首页时的组件与状态。 */
+body:not(.is-home) #main-grid[data-sidebar-home-only="true"] {
+	grid-template-columns: minmax(0, 1fr) !important;
+	grid-template-rows: auto !important;
+}
+
+body:not(.is-home) #main-grid[data-sidebar-home-only="true"] :is(
+	#left-sidebar-wrapper,
+	#right-sidebar-static,
+	#left-sidebar-dynamic,
+	#right-sidebar-dynamic,
+	#left-sidebar,
+	#right-sidebar,
+	#mobile-bottom-sidebar
+) {
+	display: none !important;
+}
+
+body:not(.is-home) #main-grid[data-sidebar-home-only="true"] > :is(div:has(> #swup-container), .footer) {
+	grid-column: 1 / -1 !important;
+	grid-row: auto !important;
+}
+
+body:not(.is-home) .content-panel > div:has(> #main-grid[data-sidebar-home-only="true"]) {
+	max-width: 1080px;
+}
+
+body.journal-article .content-panel > div:has(> #main-grid[data-sidebar-home-only="true"]) {
+	max-width: 960px;
+}
+
+/* 关闭阅读界面后仍由原有浮动目录提供导航；沉浸阅读维持原宽度设置。 */
+body.immersive-reading .content-panel > div:has(> #main-grid[data-sidebar-home-only="true"]) {
+	max-width: var(--page-width);
+}

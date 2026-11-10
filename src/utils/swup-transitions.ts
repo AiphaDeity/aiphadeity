@@ -1,5 +1,11 @@
-import { expressiveCodeConfig, navbarMode, siteConfig } from "@/config";
+import {
+	expressiveCodeConfig,
+	navbarMode,
+	seasonConfig,
+	siteConfig,
+} from "@/config";
 import type { WALLPAPER_MODE } from "@/types/config";
+import { getArticleBrowseView } from "@/utils/article-browse-utils";
 import { scheduleContentOverflowEnhancements } from "@/utils/content-overflow-utils";
 import { initializeFloatingPanels } from "@/utils/floating-panel-utils";
 import {
@@ -12,6 +18,7 @@ import {
 	updateSidebarComponentsVisibility,
 } from "@/utils/grid-layout-utils";
 import { scrollFunction } from "@/utils/scroll-utils";
+import { getSeasonPageKind } from "@/utils/season-page-utils";
 import {
 	syncBannerHomeTextVisibility,
 	updateNavbarTransparency,
@@ -55,6 +62,35 @@ function finishProgressBar(): void {
 		],
 		{ duration: 500, easing: "ease-out", fill: "forwards" },
 	);
+}
+
+/** 同时用于过渡前和换入后；首次加载很快点击时，后者补齐布局状态。 */
+function syncPageLayoutClasses(input: string): void {
+	const pathname = new URL(input, window.location.href).pathname;
+	const isHome = pathsEqual(pathname, url("/"));
+	const innerPage = getSeasonPageKind(pathname);
+	const body = document.body;
+	body.classList.toggle("is-home", isHome);
+	body.classList.toggle(
+		"journal-home",
+		seasonConfig.enabled && seasonConfig.journalLayout && isHome,
+	);
+	body.classList.toggle("journal-inner", !!innerPage);
+	body.classList.toggle("journal-article", innerPage === "article");
+	body.classList.toggle("journal-archive-page", innerPage === "archive");
+	body.classList.toggle("journal-page", innerPage === "page");
+	const pageLabel = document.querySelector("[data-inner-page-title]");
+	if (pageLabel) {
+		pageLabel.textContent =
+			document.getElementById("swup-container")?.dataset.pageTitle || "内容";
+	}
+	body.classList.toggle(
+		"article-browse-page",
+		!!getArticleBrowseView(pathname),
+	);
+	document
+		.getElementById("navbar")
+		?.setAttribute("data-is-home", String(isHome));
 }
 
 /**
@@ -166,14 +202,15 @@ function registerSwupHooks(): void {
 		const bodyElement = document.querySelector("body") as HTMLElement;
 		const isHomePage = pathsEqual(visit.to.url, url("/"));
 		const wasHome = bodyElement.classList.contains("is-home");
+		const innerPage = getSeasonPageKind(visit.to.url);
+		const wasInner = bodyElement.classList.contains("journal-inner");
 		const contentPanel = document.querySelector(
 			".content-panel",
 		) as HTMLElement | null;
-		// FLIP 只在 is-home 状态变化（首页↔非首页）时才有意义；文章↔文章、首页↔首页
-		// 类未变 → delta 必为 0，直接短路，避免常见切页白付两次强制布局读取
-		if (isHomePage !== wasHome && contentPanel) {
+		// 仅首页或阅读布局范围变化时读取位置；同类页面之间不重复触发布局读取。
+		if ((isHomePage !== wasHome || !!innerPage !== wasInner) && contentPanel) {
 			const oldTop = contentPanel.getBoundingClientRect().top; // 类切换前读
-			bodyElement.classList.toggle("is-home", isHomePage);
+			syncPageLayoutClasses(visit.to.url);
 			const newTop = contentPanel.getBoundingClientRect().top; // 类切换后读
 			const delta = oldTop - newTop;
 			// 全屏首页↔非首页 delta ≈ 92vh，总是超过 0.75 视口，此前被跳过导致内容区瞬间跳变；
@@ -197,6 +234,8 @@ function registerSwupHooks(): void {
 				contentPanel.style.transition = "";
 				contentPanel.style.transform = "";
 			}
+		} else {
+			syncPageLayoutClasses(visit.to.url);
 		}
 
 		// Control navbar transparency based on page
@@ -240,6 +279,7 @@ function registerSwupHooks(): void {
 		}
 	});
 	window.swup.hooks.on("page:view", () => {
+		syncPageLayoutClasses(window.location.pathname);
 		// 更新网格列数和侧边栏组件可见性
 		updateMainGridCols();
 		updateSidebarComponentsVisibility();
@@ -347,6 +387,7 @@ function registerSwupHooks(): void {
 
 /** 注册 Swup 钩子（swup 就绪时立即执行，否则等待 swup:enable 事件） */
 export function setupSwupTransitions(): void {
+	syncPageLayoutClasses(window.location.pathname);
 	if (window?.swup?.hooks) {
 		registerSwupHooks();
 	} else {

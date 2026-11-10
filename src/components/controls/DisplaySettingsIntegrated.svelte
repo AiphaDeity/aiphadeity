@@ -48,6 +48,7 @@ import {
 	setWavesEnabled,
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
+import { resetSeasonPalette } from "@/utils/season-utils";
 import Icon from "@/components/common/Icon.svelte";
 import {
 	backgroundWallpaper,
@@ -72,7 +73,13 @@ type OverlaySliderItem = {
 type TabKey = "appearance" | "wallpaper" | "effects";
 
 let hue = $state(getHue());
-const defaultHue = getDefaultHue();
+let defaultHue = $state(getDefaultHue());
+onMount(() => {
+	const syncSeasonHue = () => { defaultHue = getDefaultHue(); hue = getHue(); };
+	syncSeasonHue();
+	window.addEventListener("seasonchange", syncSeasonHue);
+	return () => window.removeEventListener("seasonchange", syncSeasonHue);
+});
 let wallpaperMode: WALLPAPER_MODE = $state(backgroundWallpaper.mode);
 const defaultWallpaperMode = backgroundWallpaper.mode;
 let fullscreenLayout: FullscreenWallpaperLayout = $state(
@@ -320,6 +327,7 @@ let hasVisibleOverlaySlider = $derived(
 );
 
 function resetHue() {
+	resetSeasonPalette();
 	hue = getDefaultHue();
 	requestAnimationFrame(refreshAllRangeProgress);
 }
@@ -626,7 +634,7 @@ onMount(() => {
 });
 
 $effect(() => {
-	if (hue || hue === 0) {
+	if (mounted && Number.isFinite(hue) && hue !== getHue()) {
 		setHue(hue);
 	}
 });

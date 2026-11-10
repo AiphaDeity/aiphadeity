@@ -1,0 +1,184 @@
+{
+  "generator": "OpenAI built-in imagegen",
+  "status": "First implementation assets; static character layers, not Live2D animations.",
+  "backgroundPrompt": "Text-free delicate anime landscape, quiet open sky at left for website title, clear foreground at right for separate Xiaojin layer. Spring lakeside greenery; summer sheltered cove; autumn misty lakeside porch; winter snow and warm window. No baked-in rain or snow particles.",
+  "characterPrompt": "Original chibi catgirl Xiaojin: silver-white hair, jade-gold eyes, cat ears, curling forelock, small hibiscus clip. Transparent full-body seasonal layers: spring kite, summer straw hat and fan, autumn reading, winter scarf and hot cup. Preserve identity; no text or background.",
+  "mobile": "All four anime v2 seasons, including winter night, have separately generated portrait compositions. Original v1 backgrounds remain as archived alternatives.",
+  "revisions": [
+    "src/assets/seasons/spring-anime-v2.provenance.json",
+    "src/assets/seasons/four-seasons-anime-v2.provenance.json"
+  ],
+  "assets": [
+    {
+      "name": "spring",
+      "original": "src/assets/seasons/spring.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/spring.webp",
+      "bytes": 212788
+    },
+    {
+      "name": "xiaojin-spring",
+      "original": "src/assets/seasons/xiaojin-spring.png",
+      "width": 1131,
+      "height": 1391,
+      "alpha": true,
+      "web": "public/assets/seasons/xiaojin-spring.webp",
+      "bytes": 113662
+    },
+    {
+      "name": "summer",
+      "original": "src/assets/seasons/summer.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/summer.webp",
+      "bytes": 199482
+    },
+    {
+      "name": "xiaojin-summer",
+      "original": "src/assets/seasons/xiaojin-summer.png",
+      "width": 1122,
+      "height": 1402,
+      "alpha": true,
+      "web": "public/assets/seasons/xiaojin-summer.webp",
+      "bytes": 100648
+    },
+    {
+      "name": "autumn",
+      "original": "src/assets/seasons/autumn.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/autumn.webp",
+      "bytes": 229596
+    },
+    {
+      "name": "xiaojin-autumn",
+      "original": "src/assets/seasons/xiaojin-autumn.png",
+      "width": 1164,
+      "height": 1351,
+      "alpha": true,
+      "web": "public/assets/seasons/xiaojin-autumn.webp",
+      "bytes": 97154
+    },
+    {
+      "name": "winter",
+      "original": "src/assets/seasons/winter.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/winter.webp",
+      "bytes": 216564
+    },
+    {
+      "name": "xiaojin-winter",
+      "original": "src/assets/seasons/xiaojin-winter.png",
+      "width": 1067,
+      "height": 1475,
+      "alpha": true,
+      "web": "public/assets/seasons/xiaojin-winter.webp",
+      "bytes": 114194
+    },
+    {
+      "name": "winter-night",
+      "original": "src/assets/seasons/winter-night.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/winter-night.webp",
+      "bytes": 227254
+    },
+    {
+      "name": "spring-anime-v2",
+      "original": "src/assets/seasons/spring-anime-v2.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/spring-anime-v2.webp",
+      "bytes": 265366
+    },
+    {
+      "name": "spring-anime-v2-mobile",
+      "original": "src/assets/seasons/spring-anime-v2-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "alpha": false,
+      "web": "public/assets/seasons/spring-anime-v2-mobile.webp",
+      "bytes": 221984
+    },
+    {
+      "name": "summer-anime-v2",
+      "original": "src/assets/seasons/summer-anime-v2.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/summer-anime-v2.webp",
+      "bytes": 259908
+    },
+    {
+      "name": "summer-anime-v2-mobile",
+      "original": "src/assets/seasons/summer-anime-v2-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "alpha": false,
+      "web": "public/assets/seasons/summer-anime-v2-mobile.webp",
+      "bytes": 181576
+    },
+    {
+      "name": "autumn-anime-v2",
+      "original": "src/assets/seasons/autumn-anime-v2.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/autumn-anime-v2.webp",
+      "bytes": 224386
+    },
+    {
+      "name": "autumn-anime-v2-mobile",
+      "original": "src/assets/seasons/autumn-anime-v2-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "alpha": false,
+      "web": "public/assets/seasons/autumn-anime-v2-mobile.webp",
+      "bytes": 202408
+    },
+    {
+      "name": "winter-anime-v2",
+      "original": "src/assets/seasons/winter-anime-v2.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/winter-anime-v2.webp",
+      "bytes": 224786
+    },
+    {
+      "name": "winter-anime-v2-mobile",
+      "original": "src/assets/seasons/winter-anime-v2-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "alpha": false,
+      "web": "public/assets/seasons/winter-anime-v2-mobile.webp",
+      "bytes": 177340
+    },
+    {
+      "name": "winter-night-anime-v2",
+      "original": "src/assets/seasons/winter-night-anime-v2.png",
+      "width": 1672,
+      "height": 941,
+      "alpha": false,
+      "web": "public/assets/seasons/winter-night-anime-v2.webp",
+      "bytes": 251348
+    },
+    {
+      "name": "winter-night-anime-v2-mobile",
+      "original": "src/assets/seasons/winter-night-anime-v2-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "alpha": false,
+      "web": "public/assets/seasons/winter-night-anime-v2-mobile.webp",
+      "bytes": 207092
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+---
+import { seasonConfig } from "@/config";
+import { getSortedPostsList } from "@/utils/content-utils";
+import { url } from "@/utils/url-utils";
+
+interface Props {
+	mode: "breadcrumb" | "archive";
+	pageTitle?: string;
+}
+const { mode, pageTitle } = Astro.props;
+const enabled = seasonConfig.enabled && seasonConfig.innerLayout;
+const count =
+	enabled && mode === "archive" ? (await getSortedPostsList()).length : 0;
+---
+
+{enabled && (mode === "breadcrumb" ? (
+	<nav class="inner-breadcrumb" aria-label="阅读路径">
+		<a href={url("/")} data-journal-season>四时手记</a>
+		<span aria-hidden="true">/</span>
+		<span class="inner-breadcrumb-article">文章</span>
+		<span class="inner-breadcrumb-archive">文章</span>
+		<span class="inner-breadcrumb-page" data-inner-page-title>{pageTitle || "内容"}</span>
+	</nav>
+) : (
+	<header class="inner-archive-heading">
+		<p class="inner-eyebrow">四时手记</p>
+		<h2>文章</h2>
+		<p>把写下的片段，按时间慢慢收藏。<small>共 {count} 篇</small></p>
+	</header>
+))}

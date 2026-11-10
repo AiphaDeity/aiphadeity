@@ -1,0 +1,281 @@
+/* 四时手记：保留现有组件与布局设置，只在首页启用。 */
+.journal-heading,
+.journal-index,
+.journal-profile-subtitle,
+.journal-feature-label,
+.journal-read-link,
+.journal-updates-title,
+.journal-calendar-summary {
+	display: none;
+}
+
+/* 接入原有 classic 全屏布局，主体在完整首屏之后，互不重叠。 */
+html[data-season-journal="true"]:has(body.journal-home) {
+	overflow-x: clip;
+}
+html[data-season-journal="true"][data-wallpaper-mode="fullscreen"][data-fullscreen-layout="classic"] body.journal-home #wallpaper-wrapper {
+	height: 100svh !important;
+	min-height: 100svh !important;
+	max-height: 100svh !important;
+}
+html[data-season-journal="true"][data-wallpaper-mode="fullscreen"] body.journal-home .content-panel {
+	--content-top: 100svh;
+	top: 100svh !important;
+	margin-top: 0 !important;
+	background: var(--page-bg);
+}
+html[data-season-journal="true"] body.journal-home #season-hero img {
+	filter: none !important;
+	transform: none !important;
+}
+html[data-season-journal="true"] body.journal-home #season-hero .season-landscape-image {
+	object-fit: cover !important;
+	object-position: center 65% !important;
+}
+html[data-season-journal="true"] body.journal-home #season-hero .season-hero-mascot img {
+	object-fit: contain !important;
+	object-position: center bottom !important;
+}
+body.journal-home #header-waves,
+body.journal-home #wallpaper-gradient,
+body.journal-home #scroll-down-indicator {
+	display: none !important;
+}
+/* 樱花画布只属于开场屏，不能漂浮到文章和代码上。 */
+html[data-season-journal="true"] #canvas_sakura {
+	position: absolute !important;
+	top: 0 !important;
+	height: 100svh !important;
+	clip-path: inset(0);
+}
+html[data-season-journal="true"] body:not(.is-home) #canvas_sakura {
+	display: none;
+}
+
+body.journal-home #main-grid {
+	padding-top: 3.5rem;
+	gap: 2rem;
+	align-items: start;
+	scroll-margin-top: 1rem;
+}
+body.journal-home :is(#left-sidebar, #right-sidebar) .onload-animation {
+	animation: none;
+	opacity: 1;
+	transform: none;
+}
+body.journal-home :is(#left-sidebar, #right-sidebar) {
+	animation: none;
+	opacity: 1 !important;
+	transform: none;
+}
+body.journal-home .card-base {
+	background: var(--card-bg);
+}
+body.journal-home .journal-heading {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 0 0 1.7rem;
+}
+.journal-season {
+	color: var(--btn-content);
+	font-size: 0.85rem;
+	letter-spacing: 0.1em;
+	margin-bottom: 0.7rem;
+}
+.journal-season > span:first-child { margin-right: 0.35rem; }
+.journal-heading-line { display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap; }
+.journal-heading-line h2 {
+	color: var(--deep-text);
+	font-family: "Songti SC", SimSun, serif;
+	font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: 0.07em;
+}
+.journal-heading-line p { color: var(--content-meta); font-size: 0.85rem; line-height: 1.7; }
+.journal-archive { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--btn-content); white-space: nowrap; font-size: 0.85rem; }
+body.journal-home #category-bar {
+	background: var(--card-bg);
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-large);
+	box-shadow: none;
+	padding: 0.65rem;
+	margin-bottom: 1rem;
+}
+body.journal-home #category-bar .category-pill {
+	background: transparent;
+	border-radius: 0;
+	color: var(--content-meta);
+	min-height: 44px;
+}
+body.journal-home #category-bar .category-pill[data-active] {
+	color: var(--btn-content);
+	box-shadow: inset 0 -2px var(--primary);
+}
+body.journal-home #category-bar .category-divider { opacity: 0.4; }
+body.journal-home #category-bar .pill-count { background: transparent; font-size: 0.7rem; opacity: 0.7; }
+
+/* 原有网格模式继续使用原卡片；下列层级仅作用于列表模式。 */
+body.journal-home #post-list-container.list-mode { gap: 1rem; }
+body.journal-home #post-list-container.list-mode .post-card-wrapper {
+	background: var(--card-bg);
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-large);
+	box-shadow: none;
+	min-height: 148px;
+	overflow: hidden;
+}
+body.journal-home #post-list-container.list-mode .post-card-content {
+	padding: 1.5rem 4.7rem 1.5rem 1.5rem !important;
+}
+body.journal-home #post-list-container.list-mode .no-cover .post-card-content {
+	width: 100% !important;
+}
+body.journal-home #post-list-container.list-mode .has-cover .post-card-content {
+	width: calc(100% - 9rem) !important;
+}
+body.journal-home #post-list-container.list-mode .post-card-title {
+	font-size: 1.3rem !important;
+	line-height: 1.5 !important;
+	color: var(--deep-text);
+}
+body.journal-home #post-list-container.list-mode .post-card-title::before { display: none !important; }
+body.journal-home #post-list-container.list-mode .post-card-title:hover { color: var(--primary); }
+body.journal-home #post-list-container.list-mode .description { font-size: 1rem !important; line-height: 1.7; }
+body.journal-home #post-list-container.list-mode .post-card-image {
+	width: 7.5rem !important;
+	top: 1.5rem !important;
+	bottom: 1.5rem !important;
+	right: 1.25rem !important;
+	border-radius: 0.8rem !important;
+}
+body.journal-home #post-list-container.list-mode .post-card-enter-btn {
+	width: 44px !important;
+	height: 44px !important;
+	top: 50% !important;
+	bottom: auto !important;
+	right: 1rem !important;
+	background: transparent !important;
+	transform: translateY(-50%);
+}
+body.journal-home #post-list-container.list-mode .post-card-enter-btn svg { width: 1.5rem; height: 1.5rem; }
+body.journal-home #post-list-container.list-mode .journal-feature {
+	background: var(--card-bg);
+	border: 1px solid var(--line-divider);
+	border-radius: 1.25rem;
+	box-shadow: 0 8px 30px #00000006;
+	margin: 0;
+	min-height: 250px;
+	overflow: hidden;
+}
+body.journal-home #post-list-container.list-mode .journal-feature .post-card-content {
+	padding: 2.5rem 1.75rem 1.75rem !important;
+}
+body.journal-home #post-list-container.list-mode .journal-feature.has-cover .post-card-content { width: 60% !important; }
+body.journal-home #post-list-container.list-mode .journal-feature .post-card-title { font-size: clamp(1.45rem, 2vw, 1.9rem) !important; line-height: 1.5 !important; }
+body.journal-home #post-list-container.list-mode .journal-feature .post-card-image {
+	width: calc(40% - 1.75rem) !important;
+	top: 1.25rem !important;
+	bottom: 1.25rem !important;
+	right: 1.25rem !important;
+}
+body.journal-home #post-list-container.list-mode.cover-left .has-cover .post-card-content { margin-left: auto; padding-right: 1.5rem !important; padding-left: 1rem !important; }
+body.journal-home #post-list-container.list-mode.cover-left .post-card-image { left: 1.25rem !important; right: auto !important; }
+body.journal-home #post-list-container.list-mode.cover-left .journal-feature .post-card-content { padding: 2.5rem 1.75rem 1.75rem !important; }
+body.journal-home #post-list-container.list-mode.cover-left .journal-feature .post-card-image { left: 1.25rem !important; }
+body.journal-home #post-list-container.list-mode .journal-feature .post-card-enter-btn { display: none !important; }
+body.journal-home .list-mode .journal-feature-label {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 1.75rem;
+	z-index: 1;
+	padding: 0.3rem 0.7rem 0.55rem;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+	background: var(--btn-regular-bg-hover);
+	color: var(--btn-content);
+	font-size: 0.7rem;
+	letter-spacing: 0.06em;
+}
+body.journal-home .list-mode .journal-read-link { display: inline-flex; gap: 0.65rem; align-items: center; align-self: start; min-height: 44px; margin-top: 0.75rem; color: var(--btn-content); font-size: 0.9rem; }
+body.journal-home .list-mode .journal-updates-title { display: block; margin: 0 0 0.25rem; font-size: 1.3rem; font-weight: 600; color: var(--deep-text); }
+
+/* 文章与侧栏恢复独立卡片，继续使用原组件的数据和交互。 */
+body.journal-home :is(#left-sidebar, #right-sidebar) widget-layout {
+	background: var(--card-bg);
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-large);
+	box-shadow: none;
+	padding: 1rem;
+}
+body.journal-home :is(#left-sidebar, #right-sidebar) .widget-title { margin: 0 0 0.8rem; font-size: 1rem; }
+body.journal-home :is(#left-sidebar, #right-sidebar) .widget-title::before { display: none; }
+body.journal-home :is(#left-sidebar, #right-sidebar) widget-layout > .collapse-wrapper { padding-left: 0; padding-right: 0; }
+body.journal-home #right-sidebar widget-layout[data-id="announcement"] {
+	background: var(--card-bg);
+	border: 1px solid var(--line-divider);
+	border-radius: 1rem;
+	padding: 1.25rem;
+}
+body.journal-home #site-stats > div { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+body.journal-home #site-stats > div > div { flex-direction: column; align-items: start; padding: 0; gap: 0.35rem; }
+body.journal-home #site-stats > div > div > div:first-child > div { display: none; }
+body.journal-home #site-info :is(.px-3) { padding-left: 0; padding-right: 0; }
+body.journal-home widget-layout[data-id="calendar-widget"] > .widget-title { display: none; }
+body.journal-home .journal-calendar-summary { display: flex; justify-content: space-between; align-items: center; min-height: 44px; cursor: pointer; font-weight: 600; color: var(--deep-text); list-style: none; }
+.journal-calendar-summary::-webkit-details-marker { display: none; }
+body.journal-home .journal-calendar-details[open] .journal-calendar-summary { margin-bottom: 0.75rem; }
+
+body.journal-home #left-sidebar .profile-widget {
+	display: grid;
+	grid-template-columns: 64px minmax(0, 1fr);
+	column-gap: 0.8rem;
+	row-gap: 0.7rem;
+	background: var(--card-bg);
+	padding: 1rem;
+	border: 1px solid var(--line-divider);
+	border-radius: var(--radius-large);
+	box-shadow: none;
+}
+body.journal-home #left-sidebar .profile-avatar-link { grid-column: 1; grid-row: 1 / span 2; width: 64px; height: 64px; border-radius: 50%; margin: 0; }
+body.journal-home #left-sidebar .profile-avatar-link > div:first-child { display: none; }
+body.journal-home #left-sidebar .profile-avatar-link :is(img, .image-wrapper) { width: 64px; height: 64px; object-fit: cover; }
+body.journal-home #left-sidebar .profile-details { display: contents; }
+body.journal-home #left-sidebar .profile-name { grid-column: 2; font-size: 1.05rem; align-self: end; text-align: left; margin: 0; color: var(--deep-text); overflow-wrap: anywhere; }
+body.journal-home #left-sidebar .journal-profile-subtitle { display: block; grid-column: 2; font-size: 0.9rem; color: var(--content-meta); }
+body.journal-home #left-sidebar .profile-rule { display: none; }
+body.journal-home #left-sidebar .profile-bio { grid-column: 1 / -1; text-align: left; color: var(--content-meta); font-size: 0.9rem; line-height: 1.8; margin: 0.5rem 0 0; }
+body.journal-home #left-sidebar .profile-links { grid-column: 1 / -1; justify-content: start; gap: 0; }
+body.journal-home #left-sidebar .profile-links a { background: transparent; color: var(--btn-content); min-width: 44px; min-height: 44px; }
+body.journal-home #left-sidebar .profile-links svg { width: 1.2rem; height: 1.2rem; }
+body.journal-home #left-sidebar .journal-index { display: block; grid-column: 1 / -1; border-top: 1px solid var(--line-divider); padding-top: 1rem; }
+.journal-index p { font-size: 0.95rem; font-weight: 600; color: var(--deep-text); margin-bottom: 0.5rem; }
+.journal-index a { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-size: 0.9rem; color: var(--content-meta); }
+.journal-index a:hover { color: var(--btn-content); }
+body.journal-home .footer { margin-top: 2.5rem; }
+body.journal-home .footer::before { content: "✿"; display: block; text-align: center; color: var(--season-accent); font-size: 1.4rem; margin-bottom: 1rem; }
+
+@media (min-width: 1280px) {
+	body.journal-home #main-grid[data-sidebar-enable="true"][data-sidebar-position="both"] { grid-template-columns: 14rem minmax(0, 1fr) 14rem; }
+}
+@media (max-width: 767px) {
+	body.journal-home #main-grid { padding-top: 2rem; gap: 1.25rem; }
+	body.journal-home .journal-heading { margin-bottom: 1rem; gap: 0.75rem; }
+	.journal-heading-line { gap: 0.5rem; }
+	.journal-heading-line h2 { font-size: 1.8rem; }
+	.journal-heading-line p { display: none; }
+	body.journal-home #category-bar { margin-bottom: 1rem; }
+	body.journal-home #post-list-container.list-mode .post-card-title { font-size: 1.2rem !important; }
+	body.journal-home #post-list-container.list-mode .journal-feature .post-card-content { padding: 2.5rem 1rem 1rem !important; }
+	body.journal-home #post-list-container.list-mode .journal-feature .post-card-title { font-size: 1.35rem !important; }
+	body.journal-home #post-list-container.list-mode .has-cover .post-card-content { width: calc(100% - 6.5rem) !important; }
+	body.journal-home #post-list-container.list-mode .post-card-image { width: 6rem !important; }
+	body.journal-home #post-list-container.list-mode .journal-feature.has-cover .post-card-content { width: 100% !important; padding-top: 2.5rem !important; }
+	body.journal-home #post-list-container.list-mode .journal-feature.has-cover { flex-direction: column-reverse !important; }
+	body.journal-home #post-list-container.list-mode .journal-feature .post-card-image { position: relative !important; width: 100% !important; aspect-ratio: 16 / 9 !important; top: auto !important; bottom: auto !important; right: auto !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+	html[data-season-journal="true"] #canvas_sakura { display: none; }
+}

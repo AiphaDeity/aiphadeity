@@ -1,0 +1,22 @@
+---
+import { live2dWidgetConfig, seasonConfig, spineModelConfig } from "@/config";
+---
+{/* 用户已选择其他角色引擎时，不额外挂载第二个角落角色。 */}
+{seasonConfig.enabled && seasonConfig.mascotEnabled && !live2dWidgetConfig.enable && !spineModelConfig.enable && (
+	<aside id="season-companion" class="season-companion" aria-label="小槿陪伴" hidden>
+		<div id="companion-message" class="companion-message" data-companion-message hidden>
+			<button type="button" class="companion-message-text" data-companion-dismiss aria-label="收起小槿的话" title="点击收起这句话"><span data-companion-text role="status" aria-live="polite"></span></button>
+			<button type="button" class="companion-minimize" data-companion-collapse>收起陪伴</button>
+		</div>
+		<div id="companion-character" data-companion-expanded>
+			<button type="button" class="companion-character" data-companion-greet aria-label="和小槿打招呼，按 Escape 收起" aria-controls="companion-message" aria-expanded="false"></button>
+		</div>
+		<button type="button" class="companion-restore" data-companion-restore aria-label="展开小槿" aria-controls="companion-character" aria-expanded="false" hidden>
+			<svg viewBox="0 0 40 40" width="30" height="30" fill="none" aria-hidden="true">
+				<path d="M20 32v-9m0 7c-7 0-10-4-10-4 7-2 10 1 10 4Zm0-3c7 0 10-4 10-4-7-1-10 1-10 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M20 8c-6-4-11 3-7 7-7 2-5 10 2 10 1 7 9 7 10 0 7 0 9-8 2-10 4-4-1-11-7-7Z" fill="var(--companion-flower)" stroke="currentColor" stroke-width="1.2" />
+				<circle cx="20" cy="18" r="3" fill="var(--companion-pollen)" />
+			</svg>
+		</button>
+	</aside>
+)}

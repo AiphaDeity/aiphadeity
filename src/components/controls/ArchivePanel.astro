@@ -14,6 +14,11 @@ const posts = sortedPostsList
 	.slice()
 	.sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
 
+const foundationReadingPosts = posts
+	.filter((post) => post.data.series === "嵌入式基础阅读顺序")
+	.sort((a, b) => (a.data.seriesOrder ?? Infinity) - (b.data.seriesOrder ?? Infinity));
+const firstFoundationPost = foundationReadingPosts[0];
+
 // 按年份分组
 const grouped = new Map<number, typeof posts>();
 for (const post of posts) {
@@ -56,6 +61,17 @@ const foldOnFilter = collapseAllButFirst;
   class="card-base px-8 py-6"
   data-fold={foldOnFilter ? "true" : "false"}
 >
+  {firstFoundationPost && (
+    <div class="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-(--line-divider) pb-5 text-sm">
+      <span class="font-semibold text-(--deep-text)">嵌入式基础 · 推荐阅读顺序</span>
+      <a href={getPostUrlBySlug(firstFoundationPost.id)} class="text-(--primary) hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--primary)">
+        从第一篇开始
+      </a>
+      <a href={url("/series/")} class="text-(--primary) hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--primary)">
+        查看全部 {foundationReadingPosts.length} 篇 →
+      </a>
+    </div>
+  )}
   {/* 筛选头部：默认隐藏，客户端在有筛选时填充并显示 */}
   <div id="archive-filter-header" class="mb-5 hidden">
     <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
@@ -71,10 +87,12 @@ const foldOnFilter = collapseAllButFirst;
     </div>
   </div>
 
+  <p class="archive-empty text-50 py-8 text-center" hidden={posts.length > 0}>暂时没有符合条件的文章。</p>
+
   {groups.map((group, groupIndex) => {
     const collapsed = collapseAllButFirst && groupIndex > 0;
     return (
-      <div class="archive-year-block" data-year={group.year} data-count={group.posts.length}>
+      <div id={`archive-year-${group.year}`} class="archive-year-block" data-year={group.year} data-count={group.posts.length}>
         <button
           class="archive-year-toggle flex flex-row w-full items-center h-15 cursor-pointer rounded-lg
                  hover:bg-(--btn-plain-bg-hover) transition-colors group/yr"
@@ -112,12 +130,12 @@ const foldOnFilter = collapseAllButFirst;
             >
               <div class="flex flex-row justify-start items-center h-full">
                 {/* date */}
-                <div class="w-[15%] md:w-[10%] transition text-sm text-right text-50">
+                <div class="archive-post-date w-[15%] md:w-[10%] transition text-sm text-right text-50">
                   {formatDate(post.data.published)}
                 </div>
 
                 {/* dot and line */}
-                <div class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
+                <div class="archive-post-track w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
                   <div class="transition-all mx-auto w-1 h-1 rounded-sm group-hover:h-5
                               bg-[oklch(0.5_0.05_var(--hue))] group-hover:bg-(--primary)
                               outline-4 z-50 outline-(--card-bg)
@@ -126,22 +144,24 @@ const foldOnFilter = collapseAllButFirst;
                 </div>
 
                 {/* post title */}
-                <div class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
+                <div class="archive-post-title w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
                             group-hover:translate-x-1 transition-all group-hover:text-(--primary)
                             text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden flex items-center gap-2">
                   {post.data.category && (
-                    <span class="shrink-0 inline-block text-xs font-medium px-1.5 py-0.5 rounded-sm
+                    <span class="archive-post-category shrink-0 inline-block text-xs font-medium px-1.5 py-0.5 rounded-sm
                                  bg-[oklch(0.95_0.025_var(--hue))] dark:bg-[oklch(0.25_0.025_var(--hue))]
                                  text-(--primary) group-hover:bg-(--primary) group-hover:text-white!
                                  transition-colors">
                       {post.data.category}
                     </span>
                   )}
-                  <span class="truncate">{post.data.title}</span>
+                  <span class="archive-post-name truncate">{post.data.title}</span>
+                  {post.data.description && <span class="archive-post-description">{post.data.description}</span>}
+                  {(post.data.tags || []).length > 0 && <span class="archive-post-inline-tags">{formatTag(post.data.tags || [])}</span>}
                 </div>
 
                 {/* tag list */}
-                <div class="hidden md:block md:w-[15%] text-left text-sm transition
+                <div class="archive-post-tags hidden md:block md:w-[15%] text-left text-sm transition
                             whitespace-nowrap text-ellipsis overflow-hidden text-30">
                   {formatTag(post.data.tags || [])}
                 </div>
@@ -187,6 +207,21 @@ const foldOnFilter = collapseAllButFirst;
       }
 
       this.bindYearToggles();
+      requestAnimationFrame(() => this.syncYearIndex());
+      // 首次解析时侧栏在本组件后方，首个 rAF 可能早于侧栏就绪。
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => this.syncYearIndex(), { once: true });
+      }
+    }
+
+    syncYearIndex() {
+      if (!this.isConnected) return;
+      for (const link of document.querySelectorAll("[data-archive-year]")) {
+        const block = this.querySelector(`[data-year="${link.dataset.archiveYear}"]`);
+        link.hidden = !block || block.hidden;
+        const count = link.querySelector("[data-archive-year-count]");
+        if (count && block) count.textContent = `${block.querySelector(".archive-year-count")?.textContent || "0"} 篇`;
+      }
     }
 
     // 按筛选条件隐藏不匹配的文章行，重算每年计数，隐藏空年份，重新折叠
@@ -249,6 +284,8 @@ const foldOnFilter = collapseAllButFirst;
 
       // 填充并显示筛选头部
       this.renderFilterHeader(tags, categories, uncategorized, totalVisible);
+      const empty = this.querySelector(".archive-empty");
+      if (empty) empty.hidden = totalVisible > 0;
     }
 
     setBlockCollapsed(block, collapsed) {
@@ -366,5 +403,14 @@ const foldOnFilter = collapseAllButFirst;
 
   if (!customElements.get("archive-panel")) {
     customElements.define("archive-panel", ArchivePanel);
+    // 侧栏由 Swup 保留，使用一个委托监听器，切页后始终定位当前归档。
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest?.("[data-archive-year]");
+      if (!link) return;
+      const panel = document.querySelector("archive-panel");
+      const block = panel?.querySelector(`[data-year="${link.dataset.archiveYear}"]`);
+      if (!block || block.hidden) return;
+      panel.setBlockCollapsed(block, false);
+    });
   }
 </script>

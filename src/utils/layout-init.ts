@@ -18,6 +18,7 @@ import {
 import { initIconLoader } from "@/utils/icon-loader";
 import { initImageLoadFadeIn } from "@/utils/lqip-utils";
 import { initScroll } from "@/utils/scroll-utils";
+import { initSeasons } from "@/utils/season-utils";
 import { initThemeListener, initWallpaperMode } from "@/utils/setting-utils";
 import { setupSwupTransitions } from "@/utils/swup-transitions";
 import { initTouchCodeCopyReveal } from "@/utils/touch-copy-utils";
@@ -28,6 +29,7 @@ export function initLayout(): void {
 	// 切页后的页面状态刷新由下方 swup 钩子与一次性注册的 document 监听器负责）
 	if (window.__fireflyLayoutInit) return;
 	window.__fireflyLayoutInit = true;
+	initSeasons();
 
 	initializeFloatingPanels();
 

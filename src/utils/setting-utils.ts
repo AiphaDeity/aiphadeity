@@ -18,6 +18,7 @@ import {
 	displaySettingsConfig,
 	expressiveCodeConfig,
 	sakuraConfig,
+	seasonConfig,
 	siteConfig,
 } from "../config";
 import { isHomePage as checkIsHomePage } from "./layout-utils";
@@ -35,6 +36,15 @@ export function getDefaultHue(): number {
 	// 检查是否在浏览器环境中
 	if (typeof document === "undefined") {
 		return Number.parseInt(fallback, 10);
+	}
+	const season = document.documentElement.dataset.season;
+	if (
+		seasonConfig.enabled &&
+		season &&
+		Object.hasOwn(seasonConfig.seasons, season)
+	) {
+		return seasonConfig.seasons[season as keyof typeof seasonConfig.seasons]
+			.hue;
 	}
 	const configCarrier = document.getElementById("config-carrier");
 	return Number.parseInt(configCarrier?.dataset.hue || fallback, 10);
@@ -65,29 +75,32 @@ export function resolveTheme(theme: LIGHT_DARK_MODE): LIGHT_DARK_MODE {
 }
 
 export function getHue(): number {
-	// 先检查全局对象
-	if (typeof window === "undefined" || !window.localStorage) {
+	try {
+		const stored = localStorage.getItem("hue");
+		const value =
+			stored === null || !stored.trim() ? Number.NaN : Number(stored);
+		return Number.isFinite(value) && value >= 0 && value <= 360
+			? value
+			: getDefaultHue();
+	} catch {
 		return getDefaultHue();
 	}
-	const stored = localStorage.getItem("hue");
-	return stored ? Number.parseInt(stored, 10) : getDefaultHue();
 }
 
 export function setHue(hue: number): void {
-	// 先检查是否在浏览器环境
-	if (
-		typeof window === "undefined" ||
-		!window.localStorage ||
-		typeof document === "undefined"
-	) {
-		return;
+	if (typeof document === "undefined" || !Number.isFinite(hue)) return;
+	const normalizedHue = Math.min(360, Math.max(0, hue));
+	try {
+		localStorage.setItem("hue", String(normalizedHue));
+	} catch {
+		/* 本次访问仍可设置颜色。 */
 	}
-	localStorage.setItem("hue", String(hue));
 	const r = document.querySelector(":root") as HTMLElement;
 	if (!r) {
 		return;
 	}
-	r.style.setProperty("--hue", String(hue));
+	r.style.setProperty("--hue", String(normalizedHue));
+	if (seasonConfig.enabled) r.dataset.seasonPalette = "custom";
 }
 
 export function applyThemeToDocument(theme: LIGHT_DARK_MODE): void {

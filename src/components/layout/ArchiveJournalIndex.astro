@@ -1,0 +1,17 @@
+---
+import { seasonConfig } from "@/config";
+import { getSortedPostsList } from "@/utils/content-utils";
+
+const enabled = seasonConfig.enabled && seasonConfig.innerLayout;
+const posts = enabled ? await getSortedPostsList() : [];
+const counts = new Map<number, number>();
+for (const post of posts) {
+	const year = post.data.published.getFullYear();
+	counts.set(year, (counts.get(year) || 0) + 1);
+}
+const years = [...counts.entries()].sort(([a], [b]) => b - a);
+---
+{enabled && <nav class="archive-journal-index card-base" aria-label="归档年份">
+	<h2>时间索引</h2>
+	{years.map(([year, count]) => <a href={`#archive-year-${year}`} data-archive-year={year}><span>{year}</span><span data-archive-year-count>{count} 篇</span></a>)}
+</nav>}

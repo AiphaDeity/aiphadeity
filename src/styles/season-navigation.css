@@ -1,0 +1,127 @@
+/* 首屏保持插画清晰，仅用很淡的渐变衬字，阅读区域保留较实的底色。 */
+html[data-season] {
+	--season-nav-surface: color-mix(in srgb, var(--page-bg) 82%, transparent);
+	--season-nav-border: var(--line-divider);
+	--season-nav-text: var(--deep-text);
+	--season-nav-muted: var(--content-meta);
+	--season-nav-hover: color-mix(in srgb, var(--btn-content) 10%, transparent);
+	--season-nav-active: color-mix(in srgb, var(--btn-content) 16%, transparent);
+}
+html.dark[data-season] {
+	--season-nav-surface: color-mix(in srgb, var(--page-bg) 78%, transparent);
+	--season-nav-hover: color-mix(in srgb, var(--btn-content) 12%, transparent);
+	--season-nav-active: color-mix(in srgb, var(--btn-content) 18%, transparent);
+}
+
+/* 与原导航样式在同一层中扩展，覆盖 semifull 首屏完全透明的阶段。 */
+@layer components {
+	html[data-season][data-wallpaper-mode] #navbar[data-transparent-mode][data-is-home] > div {
+		--navbar-surface-blur: 18px !important;
+		background: var(--season-nav-surface) !important;
+		border: 1px solid var(--season-nav-border) !important;
+		box-shadow: 0 3px 14px rgb(20 38 29 / 3%) !important;
+	}
+	/* 首屏关闭背景模糊，避免把插画糊成横向色块。 */
+	html[data-season-scene-ready="true"] body.is-home #navbar[data-transparent-mode][data-is-home]:not(.scrolled) > div {
+		--navbar-surface-blur: 0px !important;
+		background: transparent !important;
+		border-color: transparent !important;
+		box-shadow: none !important;
+	}
+}
+
+/* 首屏字色跟随实际插画光线；暗色界面下的日景仍使用深色文字。 */
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) {
+	--season-nav-tint: 251 253 250;
+	--season-nav-surface: rgb(251 253 250 / 12%);
+	--season-nav-text: #25382e;
+	--season-nav-muted: #455a4d;
+	--season-nav-hover: rgb(247 250 245 / 24%);
+	--season-nav-active: rgb(247 250 245 / 34%);
+	box-shadow: none !important;
+}
+html[data-season-scene-ready="true"]:has(#season-hero[data-night="true"]) body.is-home #navbar:not(.scrolled) {
+	--season-nav-tint: 27 41 53;
+	--season-nav-surface: rgb(27 41 53 / 12%);
+	--season-nav-text: #f2f6f3;
+	--season-nav-muted: #d6e1da;
+	--season-nav-hover: rgb(230 239 245 / 10%);
+	--season-nav-active: rgb(230 239 245 / 17%);
+}
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) > div::before {
+	background: linear-gradient(180deg, rgb(var(--season-nav-tint) / 18%), rgb(var(--season-nav-tint) / 6%) 68%, transparent);
+	backdrop-filter: none;
+	mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent), linear-gradient(#000, #000 55%, transparent);
+	mask-composite: intersect;
+}
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) .btn-plain {
+	font-weight: 600;
+	text-shadow: 0 1px 2px rgb(var(--season-nav-tint) / 65%);
+}
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) #season-switch {
+	background: transparent;
+	border-color: transparent;
+}
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) #search-bar {
+	background: transparent;
+	border-color: transparent;
+}
+html[data-season-scene-ready="true"] body.is-home #navbar:not(.scrolled) #search-bar:is(:hover, :focus-within) {
+	background: var(--season-nav-surface);
+}
+
+/* 原按钮的悬停底色绘制在 ::before，同步变量才能去掉残留深色块。 */
+html[data-season] #navbar {
+	--btn-plain-bg-hover: var(--season-nav-hover);
+	--btn-plain-bg-active: var(--season-nav-active);
+}
+html[data-season] #navbar .dropdown-content {
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	backdrop-filter: none !important;
+	color: var(--season-nav-text);
+	--btn-plain-bg-hover: color-mix(in srgb, var(--season-nav-text) 7%, transparent);
+	--btn-plain-bg-active: color-mix(in srgb, var(--season-nav-text) 12%, transparent);
+}
+html[data-season] #navbar .dropdown-content .btn-plain {
+	text-shadow: none !important;
+}
+html[data-season] #navbar .btn-plain {
+	min-width: 44px;
+	min-height: 44px;
+	color: var(--season-nav-text) !important;
+	text-shadow: none;
+}
+html[data-season] #navbar .navbar-brand > div {
+	color: inherit !important;
+	gap: 0.15rem;
+	letter-spacing: 0.06em;
+}
+html[data-season] #navbar #search-bar {
+	background: var(--season-nav-hover);
+	border: 1px solid var(--season-nav-border);
+}
+html[data-season] #navbar #search-bar > svg,
+html[data-season] #navbar #search-input-desktop {
+	color: var(--season-nav-text);
+}
+html[data-season] #navbar #search-input-desktop::placeholder {
+	color: var(--season-nav-muted);
+	opacity: 1;
+}
+html[data-season] #navbar #season-switch {
+	margin-inline: 0.2rem;
+	border: 1px solid var(--season-nav-border);
+	background: var(--season-nav-hover);
+}
+.season-emblem {
+	display: block;
+	width: 34px;
+	height: 34px;
+}
+.season-emblem [data-season-art] { display: none; }
+html[data-season="spring"] .season-emblem [data-season-art="spring"],
+html[data-season="summer"] .season-emblem [data-season-art="summer"],
+html[data-season="autumn"] .season-emblem [data-season-art="autumn"],
+html[data-season="winter"] .season-emblem [data-season-art="winter"] { display: inline; }

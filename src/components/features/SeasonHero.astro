@@ -1,0 +1,18 @@
+---
+import { seasonConfig } from "@/config";
+---
+{seasonConfig.enabled && (
+	<section id="season-hero" class="season-hero" aria-label="云升的四季风景">
+		<div class="season-landscape" data-season-landscape aria-hidden="true"></div>
+		<canvas class="season-weather" data-season-weather aria-hidden="true"></canvas>
+		<div class="season-hero-inner">
+			<div class="season-copy">
+				<p class="season-site-title">{seasonConfig.title}</p>
+				<p class="season-site-name">AiphaDeity</p>
+				<p class="season-subtitle">{seasonConfig.subtitle}</p>
+				<p class="season-caption" data-season-caption></p>
+			</div>
+			{seasonConfig.mascotEnabled && <div class="season-hero-mascot" data-season-hero-mascot aria-label="小槿" role="img"></div>}
+		</div>
+	</section>
+)}

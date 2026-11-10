@@ -30,7 +30,7 @@ const totalPosts = seriesList.reduce((sum, series) => sum + series.count, 0);
                         <div class="series-acc card-base overflow-hidden">
                             <button
                                 type="button"
-                                aria-expanded="false"
+                                aria-expanded={series.name === "嵌入式基础阅读顺序" ? "true" : "false"}
                                 class="series-acc-header group flex w-full items-center gap-3 p-5 md:p-6 pb-3 cursor-pointer select-none text-left transition"
                             >
                                 <span class="shrink-0 w-12 h-12 rounded-full bg-(--primary)/10 group-hover:bg-(--primary)/20 flex items-center justify-center transition-colors">
@@ -51,7 +51,11 @@ const totalPosts = seriesList.reduce((sum, series) => sum + series.count, 0);
                                 />
                             </button>
 
-                            <div class="series-acc-content overflow-hidden max-h-0 transition-[max-height,opacity] duration-300 ease-in-out">
+                            <div
+                                class="series-acc-content overflow-hidden max-h-0 transition-[max-height,opacity] duration-300 ease-in-out"
+                                data-open={series.name === "嵌入式基础阅读顺序" ? "true" : "false"}
+                                style={series.name === "嵌入式基础阅读顺序" ? "max-height: none" : undefined}
+                            >
                                 <ol class="flex flex-col px-5 md:px-6 pb-4">
                                     {
                                         series.posts.map((post, idx) => (

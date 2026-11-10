@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import ArchiveJournalIndex from "@/components/layout/ArchiveJournalIndex.astro";
 import Advertisement from "@/components/widget/Advertisement.astro";
 import Announcement from "@/components/widget/Announcement.astro";
 import Calendar from "@/components/widget/Calendar.astro";
@@ -195,6 +196,7 @@ const hasInitiallyVisibleTopComponents = topComponents.some(
 				</div>
 			) : (
 				<>
+					{side === "right" && <ArchiveJournalIndex />}
 					{/* Top components */}
 					{topComponents.length > 0 && (
 						<div

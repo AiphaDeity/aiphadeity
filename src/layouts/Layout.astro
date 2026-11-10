@@ -12,6 +12,8 @@ import MusicPlayerView from "@components/features/MusicPlayerView.astro";
 import SakuraEffect from "@components/features/SakuraEffect.astro";
 import WavesEffect from "@components/features/WavesEffect.astro";
 import ConfigCarrier from "@components/layout/ConfigCarrier.astro";
+import SeasonCompanion from "@/components/features/SeasonCompanion.astro";
+import SeasonSetup from "@/components/features/SeasonSetup.astro";
 
 import {
 	analyticsConfig,
@@ -21,6 +23,7 @@ import {
 	musicPlayerConfig,
 	navbarMode,
 	profileConfig,
+	seasonConfig,
 	siteConfig,
 } from "@/config";
 import {
@@ -41,6 +44,14 @@ import { getCanonicalUrl, url } from "@/utils/url-utils";
 import "@/styles/main.css";
 import "@/styles/immersive-reading.css";
 import "@/styles/variables.styl";
+import "@/styles/seasons.css";
+import "@/styles/season-companion.css";
+import "@/styles/season-navigation.css";
+import "@/styles/home-journal.css";
+import { getArticleBrowseView } from "@/utils/article-browse-utils";
+import { getSeasonPageKind } from "@/utils/season-page-utils";
+import "../styles/inner-journal.css";
+import "@/styles/sidebar-layout.css";
 import "@rehype-callouts-theme";
 
 interface Props {
@@ -499,12 +510,19 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     <!-- Font Setup (Astro Font API) -->
     <FontSetup />
+    <SeasonSetup />
   </head>
   <body
     class="min-h-screen"
     class:list={[
       {
         "is-home": isHomePageCheck,
+        "journal-home": seasonConfig.enabled && seasonConfig.journalLayout && isHomePageCheck,
+        "journal-inner": !!getSeasonPageKind(Astro.url.pathname),
+        "journal-article": getSeasonPageKind(Astro.url.pathname) === "article",
+        "journal-archive-page": getSeasonPageKind(Astro.url.pathname) === "archive",
+        "journal-page": getSeasonPageKind(Astro.url.pathname) === "page",
+        "article-browse-page": !!getArticleBrowseView(Astro.url.pathname),
         "sticky-navbar": navbarMode === "fixed",
         "dynamic-navbar": navbarMode === "dynamic",
       },
@@ -559,6 +577,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     <!-- Sakura Effect -->
     <SakuraEffect />
+    <SeasonCompanion />
 
     <!-- Water Waves Effect -->
     <WavesEffect />

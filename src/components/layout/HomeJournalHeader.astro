@@ -1,0 +1,16 @@
+---
+import { seasonConfig } from "@/config";
+import { url } from "@/utils/url-utils";
+---
+{seasonConfig.enabled && seasonConfig.journalLayout && (
+	<header class="journal-heading">
+		<div>
+			<p class="journal-season"><span aria-hidden="true">✿</span> <span data-journal-season>四时手记</span></p>
+			<div class="journal-heading-line">
+				<h2>近期记录</h2>
+				<p>{seasonConfig.subtitle}</p>
+			</div>
+		</div>
+		<a href={url("/archive/")} class="journal-archive">归档 <span aria-hidden="true">↗</span></a>
+	</header>
+)}

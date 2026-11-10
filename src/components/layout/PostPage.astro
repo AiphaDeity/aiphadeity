@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getPostUrlBySlug } from "@utils/url-utils";
 import PostCard from "@/components/layout/PostCard.astro";
-import { siteConfig } from "@/config";
+import { seasonConfig, siteConfig } from "@/config";
 
 const { page } = Astro.props;
 
@@ -40,6 +40,8 @@ const coverPositionClass =
 >
   {
     page.data.map((entry: PostEntry, index: number) => (
+      <Fragment>
+      {seasonConfig.enabled && seasonConfig.journalLayout && page.currentPage === 1 && index === 1 && <h3 class="journal-updates-title">最近更新</h3>}
       <PostCard
         entry={entry}
         title={entry.data.title}
@@ -53,10 +55,12 @@ const coverPositionClass =
         draft={entry.data.draft}
         pinned={entry.data.pinned}
         password={!!entry.data.password}
+        featured={seasonConfig.enabled && seasonConfig.journalLayout && page.currentPage === 1 && index === 0}
         loading={index < 2 ? "eager" : "lazy"}
         class:list="onload-animation post-card-item"
         style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
       />
+      </Fragment>
     ))
   }
 </div>

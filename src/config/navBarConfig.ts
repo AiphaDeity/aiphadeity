@@ -9,137 +9,51 @@ import {
 // 导航栏配置 - 根据顺序动态生成导航栏链接
 // NavBar Configuration - Dynamically generate navigation bar links based on order
 // ============================================================================
-const getDynamicNavBarConfig = (): NavBarConfig => {
-	// 基础导航栏链接
-	const links: NavBarLink[] = [];
-
-	// 主页
-	links.push(LinkPresets.Home);
-
-	// 文章及其子菜单
-	links.push({
-		name: "文章",
-		url: "#",
-		icon: "material-symbols:article",
-		children: [
-			// 归档
-			LinkPresets.Archive,
-
-			// 分类
-			LinkPresets.Categories,
-
-			// 标签
-			LinkPresets.Tags,
-
-			// 系列
-			LinkPresets.Series,
-		],
-	});
-
-	//社交及其子菜单
-	links.push({
-		name: "社交",
-		url: "#",
-		icon: "material-symbols:group",
-		children: [
-			// 友链
-			LinkPresets.Friends,
-
-			// 留言
-			LinkPresets.Guestbook,
-		],
-	});
-
-	// 我的及其子菜单
-	links.push({
-		name: "我的",
-		url: "#",
-		icon: "material-symbols:person",
-		children: [
-			// 动态
-			LinkPresets.Dynamic,
-
-			// 项目
-			LinkPresets.Projects,
-
-			// 相册
-			LinkPresets.Gallery,
-
-			// 书签导航
-			LinkPresets.Booknav,
-
-			// 哔哩哔哩追番
-			LinkPresets.Bilibili,
-
-			// 番组计划
-			LinkPresets.Bangumi,
-
-			// VNDB
-			LinkPresets.VNDB,
-
-			// MyAnimeList
-			LinkPresets.MAL,
-		],
-	});
-
-	// 关于及其子菜单
-	links.push({
-		name: "关于",
-		url: "#",
-		icon: "material-symbols:info",
-		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
-		],
-	});
-
-	// 自定义导航栏链接
-	links.push({
-		name: "链接",
-		url: "#",
-		icon: "material-symbols:link",
-		// 子菜单
-		children: [
-			{
-				name: "GitHub",
-				url: "https://github.com/AiphaDeity",
-				external: true,
-				icon: "fa7-brands:github",
-			},
-			{
-				name: "Gitee",
-				url: "https://gitee.com/aiphadeity",
-				external: true,
-				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "QQ交流群",
-				url: "https://qm.qq.com/q/gmClLJyYBW",
-				external: true,
-				icon: "fa7-brands:qq",
-			},
-			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
-			},
-		],
-	});
-
-	// 文档链接
-	// links.push({
-	// 	name: "文档",
-	// 	url: "https://docs-firefly.cuteleaf.cn",
-	// 	external: true,
-	// 	icon: "material-symbols:docs",
-	// });
-
-	return { links } as NavBarConfig;
-};
+const getDynamicNavBarConfig = (): NavBarConfig => ({
+	links: [
+		{ ...LinkPresets.Home, name: "首页" },
+		{ name: "文章", url: "/archive/", icon: "material-symbols:article" },
+		{ ...LinkPresets.Booknav, name: "资源" },
+		LinkPresets.Friends,
+		{
+			name: "更多",
+			url: "#",
+			icon: "material-symbols:apps-rounded",
+			children: [
+				LinkPresets.Dynamic,
+				LinkPresets.Projects,
+				LinkPresets.Gallery,
+				{
+					name: "GitHub",
+					url: "https://github.com/AiphaDeity",
+					external: true,
+					icon: "fa7-brands:github",
+				},
+				{
+					name: "Gitee",
+					url: "https://gitee.com/aiphadeity",
+					external: true,
+					icon: "fa7-brands:gitee",
+				},
+			],
+		},
+		{
+			name: "关于",
+			url: "#",
+			icon: "material-symbols:info",
+			children: [
+				LinkPresets.About,
+				{
+					name: "联系与交流",
+					url: "https://qm.qq.com/q/gmClLJyYBW",
+					external: true,
+					icon: "fa7-brands:qq",
+				},
+				{ ...LinkPresets.Sponsor, name: "支持本站" },
+			],
+		},
+	],
+});
 
 // 导航搜索配置
 export const navBarSearchConfig: NavBarSearchConfig = {

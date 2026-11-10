@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon/components";
+import { getArticleBrowseView } from "@/utils/article-browse-utils";
+import { url } from "@/utils/url-utils";
+
+const active = getArticleBrowseView(Astro.url.pathname);
+const views = [
+	{ id: "year", name: "按年份", path: "/archive/" },
+	{ id: "category", name: "按分类", path: "/categories/" },
+	{ id: "tag", name: "按标签", path: "/tags/" },
+];
+---
+
+<nav class="article-browse-nav" aria-label="文章浏览方式">
+	{views.map((view) => <a href={url(view.path)} data-browse-view={view.id} aria-current={active === view.id ? "page" : undefined}>
+		<Icon name="material-symbols:check-rounded" aria-hidden="true" />
+		<span>{view.name}</span>
+	</a>)}
+</nav>
+
+<style>
+	.article-browse-nav { display: none; }
+	:global(body.article-browse-page) .article-browse-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; margin-bottom: 24px; border: 1px solid var(--line-divider); border-radius: 14px; background: var(--card-bg); }
+	.article-browse-nav a { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; border-radius: 10px; color: var(--content-meta); font-size: 14px; transition: background-color 150ms, color 150ms; }
+	.article-browse-nav a svg { width: 18px; height: 18px; display: none; }
+	.article-browse-nav a:hover { background: var(--btn-regular-bg); color: var(--btn-content); }
+	.article-browse-nav a[aria-current="page"] { background: var(--primary); color: var(--card-bg); font-weight: 600; }
+	:global(html.dark) .article-browse-nav a[aria-current="page"] { color: var(--page-bg); }
+	.article-browse-nav a[aria-current="page"] svg { display: block; }
+	.article-browse-nav a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+	@media (prefers-reduced-motion: reduce) { .article-browse-nav a { transition: none; } }
+</style>
+
+<script>
+	import { getArticleBrowseView } from "@/utils/article-browse-utils";
+	function syncBrowseNav() {
+		const current = getArticleBrowseView(location.pathname);
+		document.querySelectorAll<HTMLAnchorElement>("[data-browse-view]").forEach((link) => {
+			if (link.dataset.browseView === current) link.setAttribute("aria-current", "page");
+			else link.removeAttribute("aria-current");
+		});
+	}
+	syncBrowseNav();
+	document.addEventListener("astro:page-load", syncBrowseNav);
+	document.addEventListener("swup:page:view", syncBrowseNav);
+</script>

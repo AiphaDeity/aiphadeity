@@ -25,6 +25,7 @@ interface Props {
 	password?: boolean;
 	style: string;
 	loading?: "lazy" | "eager";
+	featured?: boolean;
 }
 const {
 	entry,
@@ -39,6 +40,7 @@ const {
 	password,
 	style,
 	loading = "lazy",
+	featured = false,
 } = Astro.props;
 const className = Astro.props.class;
 
@@ -106,12 +108,14 @@ const minutes = remarkPluginFrontmatter.minutes;
     "post-card-wrapper",
     hasCover ? "has-cover" : "no-cover",
     pinned ? "pinned" : "",
+    featured ? "journal-feature" : "",
     gridCoverFullWidth ? "" : "grid-cover-inset",
     "card-base flex flex-col-reverse w-full rounded-(--radius-large) overflow-hidden relative",
     className,
   ]}
   style={style}
 >
+  {featured && <span class="journal-feature-label">{pinned ? "置顶" : "最新文章"}</span>}
   <!-- pinned icon -->
   <div
     class:list={[
@@ -224,6 +228,7 @@ const minutes = remarkPluginFrontmatter.minutes;
         className="stats mt-auto pt-3 text-black/30 dark:text-white/30 gap-x-2"
       />
     )}
+    {featured && <a href={url} class="journal-read-link">开始阅读 <span aria-hidden="true">↗</span></a>}
   </div>
   {
     hasCover && (

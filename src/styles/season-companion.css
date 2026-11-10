@@ -1,0 +1,42 @@
+/* 仍使用原来的小立绘与尺寸；动作限于整张图片的轻呼吸与点击反馈。 */
+.season-companion {
+	--companion-safe-left: env(safe-area-inset-left, 0px);
+	--companion-safe-right: env(safe-area-inset-right, 0px);
+	--companion-safe-top: env(safe-area-inset-top, 0px);
+	--companion-safe-bottom: env(safe-area-inset-bottom, 0px);
+	--companion-flower: color-mix(in srgb, #e6bfc5 70%, var(--card-bg));
+	--companion-pollen: #d6ad82;
+	position: fixed;
+	left: 12px;
+	top: 0;
+	z-index: 45;
+	width: 140px;
+	pointer-events: none;
+	color: var(--btn-content);
+}
+.season-companion[hidden], .season-companion [hidden] { display: none !important; }
+.season-companion[data-compact="true"] { width: 44px; }
+.season-companion button { pointer-events: auto; cursor: pointer; }
+.season-companion button:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.companion-character { position: relative; display: block; background: none; border: 0; padding: 0; width: 140px; height: 180px; border-radius: 16px; }
+.companion-character::before { content: ""; position: absolute; bottom: 1px; left: 28px; width: 65px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--deep-text) 9%, transparent); filter: blur(3px); }
+.companion-character img { display: block; height: 100%; width: 100%; object-fit: contain; object-position: left bottom; transform-origin: 50% 95%; filter: drop-shadow(0 2px 2px #0000000d); animation: companion-breathe 6s ease-in-out infinite; animation-play-state: paused; }
+.season-companion[data-idle="true"] .companion-character img { animation-play-state: running; }
+@keyframes companion-breathe { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-1px) scaleY(1.008); } }
+.companion-restore { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line-divider); border-radius: 50%; color: var(--btn-content); background: var(--card-bg); box-shadow: 0 2px 8px #00000008; transition: background-color 150ms, box-shadow 150ms; }
+.companion-restore:hover { background: var(--btn-regular-bg); box-shadow: 0 3px 12px #00000010; }
+.companion-message { position: absolute; bottom: calc(100% + 10px); left: 0; width: var(--companion-message-width, 190px); max-width: calc(100vw - 24px); border: 1px solid var(--line-divider); border-radius: 16px; padding: 10px 12px 8px; color: var(--deep-text); background: var(--card-bg); box-shadow: 0 4px 16px #00000008; animation: companion-message-in 180ms ease-out; }
+.season-companion[data-side="right"] .companion-message { left: auto; right: 0; }
+.companion-message-text { display: block; width: 100%; min-height: 44px; padding: 0; text-align: left; font-size: 13px; line-height: 1.8; color: inherit; background: transparent; border: 0; }
+.companion-minimize { display: block; min-height: 44px; margin-left: auto; padding-inline: 4px; font-size: 12px; color: var(--content-meta); background: transparent; border: 0; }
+.companion-minimize:hover { color: var(--btn-content); }
+@keyframes companion-message-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+body.immersive-reading .season-companion { display: none !important; }
+@media (max-width: 767px) {
+	.season-companion { width: 105px; }
+	.companion-character { width: 105px; height: 135px; }
+	.companion-character::before { left: 20px; width: 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.season-companion *, .season-companion *::before { animation: none !important; transition: none !important; }
+}

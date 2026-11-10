@@ -6,6 +6,8 @@ import type { SidebarLayoutConfig } from "../types/sidebarConfig";
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// 是否启用侧边栏功能
 	enable: true,
+	// 内页只保留居中的内容区；侧栏及手机底部组件仅首页显示。
+	homeOnly: true,
 
 	// 侧边栏位置：
 	// left: 仅显示左侧边栏
@@ -49,26 +51,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			showOnPostPage: true,
 		},
 		{
-			// 组件类型：公告组件
-			type: "announcement",
-			// 是否启用该组件
-			enable: true,
-			// 组件位置
-			position: "top",
-			// 是否在文章详情页显示
-			showOnPostPage: true,
-		},
-		{
-			// 组件类型：音乐播放器
-			type: "music",
-			// 是否启用该组件
-			enable: true,
-			// 组件位置
-			position: "sticky",
-			// 是否在文章详情页显示
-			showOnPostPage: true,
-		},
-		{
 			// 组件类型：分类组件
 			type: "categories",
 			// 是否启用该组件
@@ -98,6 +80,12 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 				collapseThreshold: 10,
 			},
 		},
+		{
+			type: "music",
+			enable: true,
+			position: "sticky",
+			showOnPostPage: true,
+		},
 	],
 
 	// 右侧边栏组件配置列表
@@ -118,6 +106,13 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 					limit: 2,
 				},
 			},
+		},
+		{
+			// 公告与近况统一放在右侧，左侧保留个人资料与内容索引。
+			type: "announcement",
+			enable: true,
+			position: "top",
+			showOnPostPage: true,
 		},
 		{
 			// 组件类型：站点统计组件
